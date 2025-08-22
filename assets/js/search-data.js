@@ -366,6 +366,17 @@ ninja.data = [{
             window.location.href = "/blog/2020/twitter/";
           
         },
+      },{id: "post-a-post-with-math",
+        
+          title: "a post with math",
+        
+        description: "an example of a blog post with some math",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2015/math/";
+          
+        },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
