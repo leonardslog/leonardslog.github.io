@@ -7,7 +7,6 @@ first_name: Leonard
 middle_name:
 last_name: Jones
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   A public-facing sandbox for sharing ideas and strategies related to my professional and personal pursuits. Based on [*folio](https://github.com/bogoli/-folio) design.
 footer_text: 
@@ -19,7 +18,7 @@ url: https://leonardslog.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
 last_updated: false # set to true if you want to display last updated in the footer
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
-back_to_top: true # set to false to disable the back to top button
+back_to_top: false # set to false to disable the back to top button
 
 # -----------------------------------------------------------------------------
 # Theme
