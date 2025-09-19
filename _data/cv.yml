@@ -30,27 +30,27 @@
   contents:
     - title: Bonderman Travel Fellow
       institution: University of Washington
-      year: June 2024 - March 2025
+      year: 2024.06 - 2025.03
       description: Awarded highly competitive fellowship to support eight months of independent international travel across nine countries in three distinct geographic regions. Managed complex travel logistics and uncertainty, enhancing adaptability, problem-solving and operational planning in dynamic data-scarce environments with varying infrastructure limits. Strengthened cross-cultural communication skills, frequently engaging with diverse communities and navigating language barriers to build meaningful connections and gather local insightss
     - title: National Science Foundation Postdoctoral Fellow
       institution: University of Michigan, Ann Arbor, Michigan, USA
-      year: June 2022- June 2024
+      year: 2022.06 - 2024.06
       description:
         - Developed statistical models that account for both discrete and continuous spatial variation in admixture detection.
         - Constructed an evolutionary simulation framework to test the efficacy of widely used geospatially agnostic methods for population structure inference under complex evolutionary histories.
     - title: Research Associate, Bradburd Lab
       institution: Michigan State University, East Lansing, Michigan, USA.
-      year: January 2021 - May 2022
+      year: 2021.01 - 2022.05
       description: Conducted meta-analysis that identified perpetuation of bias in peer-review pipelines within Ecology and Evolution journals.
     - title: Graduate Student Researcher
       institution: University of Washington, Seattle, Washington, USA
-      year: September 2013 - December 2020
+      year: 2013.09 - 2020.12
       description:
         - Conducted multi-year field research and specimen collection for deposition in museum collections, NGS library preparation, and data analysis for research on evolution in nonmodel systems. Communicated complex research topics to broad audiences across the knowledge spectrum, including the general public, community leaders, and industry stakeholders.
         - Developed and taught lectures, discussions, and lab sections in introductory biology, evolution, advanced animal physiology, advanced cell biology, and evolutionary medicine
     - title: Research Technician, Lehmann Lab
       institution: Skirball Institute of Biomolecular Medicine, New York, New York, USA
-      year: September 2009 - May 2013
+      year: 2009.09 - 2013.05
       description: 
         - Conducted enhancer/suppressor genetic screen to identify candidate disruptors of germ cell development in <i>Drosophila melanogaster</i>
         - Developed cDNA library to examine conservation of spatial and temporal control mechanisms of germ-plasm RNA localization across <i>Drosophila</i> species
@@ -61,7 +61,7 @@
   contents:
     - year: 2022
       items:
-        - National Science Foundation Postdoctoral Research Fellowship in Biology (DEB #2209320) 
+        - National Science Foundation Postdoctoral Research Fellowship in Biology (DEB 2209320) 
     - year: 2019
       items:
         - WRF Hall Teaching Award
@@ -70,7 +70,7 @@
         - Ingrith Deyrup-Olsen Teaching Award
     - year: 2016
       items:
-        - National Science Foundation Doctoral Dissertation Improvement Grant (DEB #1600844)
+        - National Science Foundation Doctoral Dissertation Improvement Grant (DEB 1600844)
         - American Museum of Natural History Theodore Roosevelt Memorial Fund
         - University of Washington Friday Harbor Labs Award
     - year: 2015
