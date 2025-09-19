@@ -1,28 +1,28 @@
 - title: General Information
   type: map
   contents:
-    - name: Leonard N. Jones II
-      value: Leonard Jones
+    - name: Name
+      value: Leonard N. Jones II
     - name: Date of Birth
       value: 29th Agust 1984
-    - name: Languages
-      value: English
+    # - name: Languages
+    #   value: English
 
 - title: Education
   type: time_table
   contents:
     - title: PhD, Biology
-      institution: University of Washington, Seattle, Washington, USA
+      institution: University of Washington
       year: 2020
-      description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
+      # description:
+      #   - Description 1.
+      #   - Description 2.
+      #   - title: Description 3.
+      #     contents:
+      #       - Sub-description 1.
+      #       - Sub-description 2.
     - title: BA, Biology
-      institution: New York University, New York, New York, USA
+      institution: New York University
       year: 2006
 
 - title: Experience
@@ -80,19 +80,19 @@
       items:
         - National Human Genome Research Institute Genome Training Grant (2014-2016) 
 
-- title: Academic Interests
-  type: nested_list
-  contents:
-    - title: Topic 1.
-      items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
-      items:
-        - Description 1.
-        - Description 2.
+# - title: Academic Interests
+#   type: nested_list
+#   contents:
+#     - title: Topic 1.
+#       items:
+#         - Description 1.
+#         - Description 2.
+#     - title: Topic 2.
+#       items:
+#         - Description 1.
+#         - Description 2.
 
-- title: Other Interests
-  type: list
-  contents:
-    - <u>Hobbies:</u> cinema studies, natural history, cycling.
+# - title: Other Interests
+#   type: list
+#   contents:
+#     - <u>Hobbies:</u> cinema studies, natural history, cycling.
