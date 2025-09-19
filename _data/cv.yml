@@ -23,7 +23,7 @@
       #       - Sub-description 2.
     - title: BA, Biology
       institution: New York University
-      year: 2006
+      year: 2007
 
 - title: Experience
   type: time_table
@@ -64,21 +64,21 @@
         - National Science Foundation Postdoctoral Research Fellowship in Biology (DEB 2209320) 
     - year: 2019
       items:
-        - WRF Hall Teaching Award
+        - WRF Hall Teaching Award (University of Washington)
     - year: 2018
       items:
-        - Ingrith Deyrup-Olsen Teaching Award
+        - Ingrith Deyrup-Olsen Teaching Award (University of Washington)
     - year: 2016
       items:
         - National Science Foundation Doctoral Dissertation Improvement Grant (DEB 1600844)
         - American Museum of Natural History Theodore Roosevelt Memorial Fund
-        - University of Washington Friday Harbor Labs Award
+        - Friday Harbor Labs Award (University of Washington)
     - year: 2015
       items:
-        - University of Washington Snyder Award   
-    - year: 2014
+        - Snyder Award (University of Washington)
+    - year: 2014.09 - 2016.09
       items:
-        - National Human Genome Research Institute Genome Training Grant (2014-2016) 
+        - National Human Genome Research Institute Genome Training Grant
 
 # - title: Academic Interests
 #   type: nested_list
