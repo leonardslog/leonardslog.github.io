@@ -3,10 +3,12 @@
   contents:
     - name: Name
       value: Leonard N. Jones II
-    - name: Date of Birth
-      value: 29th Agust 1984
+    # - name: Date of Birth
+    #   value: 29th Agust 1984
     - name: Email
       value: leonard[dot]jones[at]gmail[dot]com
+    - name: Url
+      value: https://www.linkedin.com/in/leonardnjonesii/
     # - name: Languages
     #   value: English
 
@@ -26,7 +28,7 @@
     - title: BA, Biology
       institution: New York University
       year: 2007
-    - title: AA
+    - title: Associate of Arts
       institution: New York University
       year: 2004
 
