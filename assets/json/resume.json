@@ -27,8 +27,8 @@
       "name": "University of Michigan",
       "position": "National Science Foundation Postdoctoral Fellow",
       "url": "https://lsa.umich.edu/eeb",
-      "startDate": "2022-06",
-      "endDate": "2024-05",
+      "startDate": "2022.06",
+      "endDate": "2024.05",
       "summary": "Developed statistical models that account for both discrete and continuous spatial variation in admixture detection. Constructed an evolutionary simulation framework to test the efficacy of widely used geospatially agnostic methods for population structure inference under complex evolutionary histories.",
       "highlights": ["Hierarchical structure","Admixture"]
     },
@@ -36,8 +36,8 @@
       "name": "Michigan State University",
       "position": "Postdoctoral Research Associate",
       "url": "https://integrativebiology.natsci.msu.edu/",
-      "startDate": "2022-05",
-      "endDate": "2021-01",
+      "startDate": "2022.05",
+      "endDate": "2021.01",
       "summary": "Conducted meta-analysis that identified systemic bias in peer-review pipelines within Ecology and Evolution journals.",
       "highlights": ["Spatial population genetics", "Meta-analysis"]
     },
@@ -45,8 +45,8 @@
       "name": "Skirball Institute of Biomolecular Medicine",
       "position": "Research Technician",
       "url": "https://med.nyu.edu/",
-      "startDate": "2009-09",
-      "endDate": "2013-05",
+      "startDate": "2009.09",
+      "endDate": "2013.05",
       "summary": "Germ cell specialization and localization during embryonic development.",
       "highlights": ["RNA localicalization", "Enhancer-Suppresor screen"]
     }
@@ -57,8 +57,8 @@
       "location": "Seattle, Washington, USA",
       "position": "Instructor of record",
       "url": "https://www.fepps.org/",
-      "startDate": "2014-03",
-      "endDate": "2014-05",
+      "startDate": "2014.03",
+      "endDate": "2014.05",
       "summary": "Designed coursework and served as instructor for for-credit Introductory Biology course in collaboration with Tacoma Community College.",
       "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
     },
@@ -67,8 +67,8 @@
       "location": "Seattle, Washington, USA",
       "position": "Instructor",
       "url": "https://www.universitybeyondbars.org/",
-      "startDate": "2014-04-01",
-      "endDate": "2015-07-01",
+      "startDate": "2014.04",
+      "endDate": "2014.05",
       "summary": "Guest instructor for multi-part seminar series on topids in Evolution.",
       // "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
     },
@@ -77,8 +77,8 @@
       "location": "Seattle, Washington, USA",
       "position": "Specimen preparator, exhibit interpreter",
       "url": "https://example.com",
-      "startDate": "2013-09",
-      "endDate": "2019-05",
+      "startDate": "2013.09",
+      "endDate": "2019.05",
       "summary": "Conducted specimen preparation for the museum collection, assisted in exhibit design, and served as subject interpreter during public events.",
       // "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
     },
@@ -100,8 +100,8 @@
       "url": "https://www.biology.washington.edu/",
       "area": "Biology",
       "studyType": "PhD",
-      "startDate": "2013-09",
-      "endDate": "2020-12",
+      "startDate": "2013.09",
+      "endDate": "2020.12",
       // "score": "10",
       // "courses": ["Theory of Relativity"]
     },
@@ -111,8 +111,8 @@
       "url": "https://as.nyu.edu/departments/biology.html",
       "area": "Biology",
       "studyType": "BA",
-      "startDate": "2002-09",
-      "endDate": "2007-01",
+      "startDate": "2002.09",
+      "endDate": "2007.01",
       // "score": "10",
       // "courses": ["Theory of Relativity"]
     }
