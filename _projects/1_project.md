@@ -10,6 +10,46 @@ related_publications: true
 
 To familiarize myself with RNA and ATAC-seq analysis workflows, I opted to work with publicly available raw data from the Allen Institute's [Brain Knowledge Platform](https://brain-map.org/bkp). These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset *Callithrix jacchus*.
 
+I learned much of the following workflow and code from the following tutorials/vignettes: \
+https://stuartlab.org/signac/articles/overview \
+https://satijalab.org/seurat/articles/get_started_v5_new \
+https://ngs101.com/tutorials/ \
+https://github.com/mousepixels/sanbomics_scripts
+
+## System setup
+
+_**Note**_: At the time of this exercise the developer version of `Seurat` was required to fix a [bug](https://github.com/satijalab/seurat/issues/10180) encountered in downstream plotting.
+
+~~~
+# analysis
+library(Seurat) # v5.3.1.9001
+library(Signac)
+library(presto) # for much faster Wilcoxon rank sum test
+library(SingleR)
+
+# object manipulation
+library(anndataR)
+library(scCustomize)
+library(reticulate)
+
+# annotation
+library(rtracklayer)
+library(GenomeInfoDb)
+library(biomaRt)
+
+# parallelization
+library(future)
+plan(multisession, workers = 2) # parallelization
+options(future.globals.maxSize= 11000*1024^2) # e.g. 6000gb*1024^2
+
+# visualization
+library(ggplot2)
+library(pheatmap)
+library(VennDiagram)
+~~~
+
+
+
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
     ---
