@@ -2,7 +2,7 @@
 layout: page
 title: 10X multiome analysis in R
 description: with background image
-img: assets/img/12.jpg
+img: assets/img/Common_marmoset_(Callithrix_jacchus).jpeg
 importance: 1
 category: workbench
 related_publications: true
