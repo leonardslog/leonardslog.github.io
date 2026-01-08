@@ -1,16 +1,14 @@
 ---
 layout: page
-title: project 1
+title: 10X multiome analysis in R
 description: with background image
 img: assets/img/12.jpg
 importance: 1
-category: work
+category: workbench
 related_publications: true
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+To familiarize myself with RNA and ATAC-seq analysis workflows, I opted to work with publicly available raw data from the Allen Institute's [Brain Knowledge Platform](https://brain-map.org/bkp). These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset *Callithrix jacchus*.
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
