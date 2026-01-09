@@ -1,6 +1,6 @@
 <!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> 10X multiome analysis in R | Leonard Jones </title> <meta name="author" content="Leonard Jones"> <meta name="description" content="with background image"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%93%93&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://leonardslog.github.io/projects/1_project/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
     initTheme();
-  </script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Leonard</span> Jones </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">10X multiome analysis in R</h1> <p class="post-description">with background image</p> </header> <article> <p>To familiarize myself with RNA and ATAC-seq analysis workflows, I opted to work with publicly available raw data from the Allen Institute’s <a href="https://brain-map.org/bkp" rel="external nofollow noopener" target="_blank">Brain Knowledge Platform</a>. These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset <em>Callithrix jacchus</em>.</p> <p>I learned much of the following workflow and code from the following tutorials/vignettes: <br> https://stuartlab.org/signac/articles/overview <br> https://satijalab.org/seurat/articles/get_started_v5_new <br> https://ngs101.com/tutorials/ <br> https://github.com/mousepixels/sanbomics_scripts</p> <h2 id="system-setup">System setup</h2> <p><em><strong>Note</strong></em>: At the time of this exercise the developer version of <code class="language-plaintext highlighter-rouge">Seurat</code> was required to fix a <a href="https://github.com/satijalab/seurat/issues/10180" rel="external nofollow noopener" target="_blank">bug</a> encountered in downstream plotting.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># analysis
+  </script> </head> <body class="fixed-top-nav sticky-bottom-footer"> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Leonard</span> Jones </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">10X multiome analysis in R</h1> <p class="post-description">with background image</p> </header> <article> <p>To familiarize myself with RNA and ATAC-seq analysis workflows, I opted to work with publicly available raw data from the Allen Institute’s <a href="https://brain-map.org/bkp" rel="external nofollow noopener" target="_blank">Brain Knowledge Platform</a>. These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset <em>Callithrix jacchus</em>.</p> <p>Beyond the software documentation, I also found the following resources incredibly helpful: <br> <a href="https://ngs101.com/tutorials/" rel="external nofollow noopener" target="_blank">https://ngs101.com/tutorials/</a> <br> <a href="https://github.com/mousepixels/sanbomics_scripts" rel="external nofollow noopener" target="_blank">https://github.com/mousepixels/sanbomics_scripts</a></p> <h2 id="system-setup">System setup</h2> <p><em><strong>Note</strong></em>: At the time of this exercise the developer version of <code class="language-plaintext highlighter-rouge">Seurat</code> was required to fix a <a href="https://github.com/satijalab/seurat/issues/10180" rel="external nofollow noopener" target="_blank">bug</a> encountered in downstream plotting.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># analysis
 library(Seurat) # v5.3.1.9001
 library(Signac)
 library(presto) # for much faster Wilcoxon rank sum test
@@ -25,7 +25,365 @@ options(future.globals.maxSize= 11000*1024^2) # e.g. 6000gb*1024^2
 library(ggplot2)
 library(pheatmap)
 library(VennDiagram)
-</code></pre></div></div> <p>To give your project a background in the portfolio page, just add the img tag to the front matter like so:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+</code></pre></div></div> <h2 id="preprocessing">Preprocessing</h2> <p>Loading metadata for the raw counts:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meta &lt;- read.csv(
+  file = '2021-08-25_Marm038_brainstem_sl9_rxn1.atac.per_barcode_metrics.csv',
+  header = TRUE,
+  row.names = 1)
+</code></pre></div></div> <p>For the custom annotation, I had to use the same <em>C. jacchus</em> genome build as what the reads were aligned to (NCBI RefSeq Assembly ID: <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_009663435.1/" rel="external nofollow noopener" target="_blank">GCF_009663435.1</a> (‘caljac4’ in the UCSC browser).</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>annotations &lt;- rtracklayer::import('Callithrix_jacchus_cj1700_1/ncbi_dataset/data/GCF_009663435.1/genomic.gtf')
+</code></pre></div></div> <p>Some functions to be used downstream expect certain column names in the Assay objects and will call errors without them, so they’re added here.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>colnames(mcols(annotations))[colnames(mcols(annotations)) == "gene"] &lt;- "gene_name" # gene_name required for CreateChromatinAssay() annotation parameter
+annotations$tx_id &lt;- annotations$transcript_id # tx_id column potentially required to prevent CoveragePlot() error
+annotations$gene_name &lt;- annotations$gene # gene_name col required for CreateChromatinAssay() annotation argument
+colnames(mcols(annotations))
+</code></pre></div></div> <p>Seurat’s CreateChromatinAssay() also requires UCSC format for the chromosome labels of the reference (currently RefSeq), so here they’re changed by vector mapping with the Alias.txt downloaded from the UCSC Genome Browser.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alias_map_df &lt;- read.csv("Callithrix_jacchus_cj1700_1/GCF_009663435.1.chromAlias.txt", 
+                         header = TRUE, sep = "\t"
+)
+head(alias_map_df)
+colnames(alias_map_df)[1] &lt;- "refseq"
+head(alias_map_df)
+       refseq assembly    genbank ncbi ucsc
+1 NC_025586.1       MT              MT chrM
+2 NC_048383.1     chr1 CM018917.1    1 chr1
+3 NC_048384.1     chr2 CM018918.1    2 chr2
+4 NC_048385.1     chr3 CM018919.1    3 chr3
+5 NC_048386.1     chr4 CM018920.1    4 chr4
+6 NC_048387.1     chr5 CM018921.1    5 chr5
+
+alias_map_vector &lt;- setNames(alias_map_df$ucsc, alias_map_df$refseq)
+alias_map_vector &lt;- alias_map_vector[!is.na(alias_map_vector) &amp; alias_map_vector != ""] # remove NAs and blanks in case present
+head(alias_map_vector)
+NC_025586.1 NC_048383.1 NC_048384.1 NC_048385.1 NC_048386.1 NC_048387.1 
+     "chrM"      "chr1"      "chr2"      "chr3"      "chr4"      "chr5" 
+</code></pre></div></div> <p>Next, a vector of the current chromosomes/scaffolds in the genome that need to be changed is constructed, mapped to the names to names to UCSC names, and assigned to the genome/annotation object.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>current_seqlevels &lt;- seqlevels(annotations)
+new_seqlevels &lt;- alias_map_vector[as.character(current_seqlevels)]
+seqlevels(annotations) &lt;- new_seqlevels
+</code></pre></div></div> <p>The presence of NA’s in the ‘gene_biotype’ column of the annotation object will call an error, so rows with them were removed.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>annotations &lt;- annotations[!is.na(annotations$gene_biotype)] # NAs will introduce error during TSSEnrichment
+seqlevelsStyle(annotations) # confirmed that new style is UCSC
+</code></pre></div></div> <h2 id="create-multiome-seurat-object">Create multiome Seurat object</h2> <p>The raw RNA and ATAC feature matrices were individually loaded and filtered to remove all droplets deemed cell non-calls by the CellRanger pipeline.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>counts &lt;- Read10X_h5(filename = "2021-08-25_Marm038_brainstem_sl9_rxn1.atac.raw_feature_bc_matrix.h5")
+
+multiome_data &lt;- CreateSeuratObject(counts = counts$`Gene Expression`, meta.data = meta, assay = "RNA")
+multiome_data &lt;- subset(multiome_data, subset = is_cell == 1)
+
+atac &lt;- CreateSeuratObject(counts = counts$Peaks, meta.data = meta, assay = "ATAC")
+atac &lt;- subset(atac, subset = is_cell == 1)
+</code></pre></div></div> <p>Creation of the chromatin ASSAY with the ATAC feature matrix requires both the fragments and the annotation object. Raw objects are no longer needed and can be removed to free up memory.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>multiome_data[["ATAC"]] &lt;- CreateChromatinAssay(
+  counts = LayerData(atac), 
+  sep = c(":", "-"),
+  genome = "calJac4",
+  annotation = annotations,
+  fragments = './2021-08-25_Marm038_brainstem_sl9_rxn1.atac_fragments.tsv.gz',
+)
+rm(atac, counts, current_seqlevels, new_seqlevels)
+gc()
+</code></pre></div></div> <p>Per-cell quality control metrics were calculated and visualized to inform additional filtering.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DefaultAssay(multiome_data) &lt;- "ATAC"
+multiome_data &lt;- NucleosomeSignal(object = multiome_data)
+multiome_data &lt;- TSSEnrichment(object = multiome_data, fast = FALSE)
+
+DensityScatter(multiome_data, x="nCount_ATAC", y="TSS.enrichment", 
+               log_x=TRUE, quantiles=TRUE)
+VlnPlot(
+  object = multiome_data,
+  features = c("nCount_ATAC", "TSS.enrichment", "nucleosome_signal"),
+  pt.size = FALSE,
+  ncol = 3
+)
+</code></pre></div></div> <p>I filtered cells with cuttoffs for counts, TSS enrichment, and nucleosome signal based on the bottom and top quantiles shown in the density scatterplot.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>multiome_data_filtered &lt;- subset(
+  x = multiome_data,
+  subset = nCount_ATAC &lt; 74000 &amp;
+    nCount_ATAC &gt; 2000 &amp;
+    TSS.enrichment &gt; 2.7 &amp;
+    nucleosome_signal &lt; 1.75
+)
+rm(multiome_data)
+gc()
+</code></pre></div></div> <h2 id="normalization">Normalization</h2> <p><strong><em>Note</em></strong>: MapMyCells does not require normalization for cell annotation, and developers urge caution in interpreting results from log-normalized data, so if performing this step first, it’s important to reference the correct layer within the Seurat object when formatting its input.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DefaultAssay(multiome_data_filtered) &lt;- "RNA"
+multiome_data_filtered &lt;- NormalizeData(multiome_data_filtered, assay="RNA")
+multiome_data_filtered &lt;- FindVariableFeatures(multiome_data_filtered, assay="RNA", nfeatures = 5000)
+multiome_data_filtered &lt;- ScaleData(multiome_data_filtered, assay="RNA")
+multiome_data_filtered &lt;- RunPCA(multiome_data_filtered)
+
+DefaultAssay(multiome_data_filtered) &lt;- "ATAC"
+multiome_data_filtered &lt;- FindTopFeatures(multiome_data_filtered, min.cutoff = 5)
+multiome_data_filtered &lt;- RunTFIDF(multiome_data_filtered)
+multiome_data_filtered &lt;- RunSVD(multiome_data_filtered)
+</code></pre></div></div> <h2 id="cell-annotation">Cell annotation</h2> <p>Fomatting an anndata (.h5ad) or .csv file for MapMyCells input:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>as.anndata(
+  multiome_data_filtered,
+  file_path = "",
+  file_name= "multiome_data_filtered.h5ad",
+  assay = "RNA",
+  main_layer = "counts",
+  other_layers = NULL,
+  transer_dimreduc = FALSE,
+  verbose = TRUE,
+)
+
+SaveSeuratRds(object = multiome_data_filtered, file = "multiome_data_filtered.Rds")
+</code></pre></div></div> <p>Loading results for cell annotation using the <a href='"https://brain-map.org/bkp/analyze/mapmycells"'>MapMyCells</a> browser platform with the 10x Whole Mouse Brain Taxonomy (CCN20230722) as the reference and adding to the multiome object. Seurat rownames were renamed as the cell_ID for integration with the Seurat object.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mapmycells_WMB &lt;- read.csv(file = "multiome_data_filtered_10xWholeMouseBrain(CCN20230722)/multiome_data_filtered_10xWholeMouseBrain(CCN20230722).csv",
+                             skip = 4, header = TRUE)https://brain-map.org/bkp/analyze/mapmycells
+colnames(mapmycells_WMB)
+# [1] "cell_id"                             "class_label"                        
+# [3] "class_name"                          "class_bootstrapping_probability"    
+# [5] "subclass_label"                      "subclass_name"                      
+# [7] "subclass_bootstrapping_probability"  "supertype_label"                    
+# [9] "supertype_name"                      "supertype_bootstrapping_probability"
+#[11] "cluster_label"                       "cluster_name"                       
+#[13] "cluster_alias"                       "cluster_bootstrapping_probability" 
+
+rownames(mapmycells_WMB) &lt;- mapmycells_WMB$cell_id
+</code></pre></div></div> <p>From the distribution of celltype counts (N=16227), over 60% of the cells are identified as oligodendrocytes or oligodendrocyte precursor cells (“31 OPC-Oligo”), with the 2nd and 3rd largest clusters consisting of glutamatergic neurons (“23 P Glut”) and astrocytes or ependymal cells (“30 Astro-Epen”), respectively.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.frame(Cell_counts=head(sort(table(mapmycells_WMB$class_name),decreasing=T),34))
+# most well represented cells
+# Cell_counts.Var1 Cell_counts.Freq
+# 1       31 OPC-Oligo            10258
+# 2          23 P Glut             2550
+# 3      30 Astro-Epen             1407
+# 4          34 Immune              861
+# 5         20 MB GABA              269
+# 6         24 MY Glut              222
+# 7         19 MB Glut              155
+# 8          26 P GABA              134
+# 9        33 Vascular               67
+# 10     01 IT-ET Glut               62
+# 11        21 MB Dopa               60
+# 12    05 OB-IMN GABA               54
+# 13   13 CNU-HYa Glut               22
+# 14        12 HY GABA               20
+# 15        14 HY Glut               14
+# 16        29 CB Glut               13
+# 17    04 DG-IMN Glut                9
+# 18   11 CNU-HYa GABA                9
+# 19 02 NP-CT-L6b Glut                8
+# 20   06 CTX-CGE GABA                8
+# 21     22 MB-HB Sero                7
+# 22        27 MY GABA                5
+# 23   07 CTX-MGE GABA                4
+# 24     17 MH-LH Glut                3
+# 25        28 CB GABA                2
+# 26            32 OEC                2
+# 27     03 OB-CR Glut                1
+# 28   08 CNU-MGE GABA                1
+</code></pre></div></div> <h2 id="differential-expression-analysis">Differential expression analysis</h2> <p>I examined differential expression between pairs of these celltype clusters using Wilcoxon Rank Sum test with <code class="language-plaintext highlighter-rouge">FindMarkers()</code>.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DefaultAssay(data) &lt;- "RNA"
+Idents(data) &lt;- "class_name"
+
+# oligodendrocytes vs glutamatergic neurons
+oligo_pglut.de.markers &lt;- FindMarkers(
+  data,
+  ident.1 = "31 OPC-Oligo",
+  ident.2 = "23 P Glut",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+head(oligo_pglut.de.markers)
+# p_val avg_log2FC pct.1 pct.2 p_val_adj
+# EPHA7            0  -4.990820 0.043 0.962         0
+# ADCY8            0  -5.121001 0.052 0.971         0
+# SRRM3            0  -4.881668 0.032 0.945         0
+# LOC103787440     0  -5.257025 0.028 0.939         0
+# TENM4            0  -4.886707 0.085 0.988         0
+# LOC103796371     0  -4.610896 0.056 0.959         0
+
+range(oligo_pglut.de.markers$avg_log2FC)
+# [1] -8.254263  5.958942
+write.csv(oligo_pglut.de.markers, file = "oligo_pglut_de_markers.csv")
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># glutamatergic neurons vs astrocytes
+pglut_astro.de.markers &lt;- FindMarkers(
+  data,
+  ident.1 = "23 P Glut",
+  ident.2 = "30 Astro-Epen",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+head(pglut_astro.de.markers)
+# p_val avg_log2FC pct.1 pct.2 p_val_adj
+# LOC103787440     0   5.352007 0.939 0.045         0
+# LOC100413948     0   5.000467 0.993 0.100         0
+# KSR2             0   4.767807 0.971 0.095         0
+# SCN3A            0   4.328221 0.957 0.088         0
+# ANO4             0   4.711078 0.939 0.075         0
+# PLPPR1           0   4.557623 0.921 0.059         0
+
+range(pglut_astro.de.markers$avg_log2FC)
+# [1] -8.625408  6.539726
+write.csv(pglut_astro.de.markers, file = "pglut_astro_de_markers.csv")
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># astrocytes vs oligodendrocytes
+astro_oligo.de.markers &lt;- FindMarkers(
+  data,
+  ident.1 = "30 Astro-Epen",
+  ident.2 = "31 OPC-Oligo",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+head(astro_oligo.de.markers)
+# p_val avg_log2FC pct.1 pct.2 p_val_adj
+# BMPR1B       0   6.470252 0.924 0.036         0
+# RFX4         0   6.113532 0.896 0.033         0
+# GLI3         0   7.028026 0.866 0.013         0
+# SLC4A4       0   6.065063 0.962 0.113         0
+# ARHGAP26     0   4.884257 0.935 0.096         0
+# GASK1A       0   6.239898 0.865 0.030         0
+range(astro_oligo.de.markers$avg_log2FC)
+# [1] -5.352012  9.268554
+write.csv(astro_oligo.de.markers, file = "astro_oligo_de_markers.csv")
+</code></pre></div></div> <h2 id="differential-accessibility-analysis">Differential accessibility analysis</h2> <p>Differential chromatin accessibility analysis was conducted using the same approach on the ATAC assay:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DefaultAssay(data) &lt;- "ATAC"
+data &lt;- SortIdents(data)
+
+# find peaks associated with gene activities
+library(presto)
+
+oligo_pglut.da.peaks &lt;- FindMarkers(
+  object = data,
+  ident.1 = "31 OPC-Oligo",
+  ident.2 = "23 P Glut",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+write.csv(oligo_pglut.da.peaks, file = "oligo_pglut_da_peaks.csv")
+
+astro_oligo.da.peaks &lt;- FindMarkers(
+  object = data,
+  ident.1 = "30 Astro-Epen",
+  ident.2 = "31 OPC-Oligo",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+write.csv(astro_oligo.da.peaks, file = "astro_oligo_da_peaks.csv")
+
+pglut_astro.da.peaks &lt;- FindMarkers(
+  object = data,
+  ident.1 = "23 P Glut",
+  ident.2 = "30 Astro-Epen",
+  test.use = 'wilcox',
+  min.pct = 0.1
+)
+write.csv(pglut_astro.da.peaks, file = "pglut_astro_da_peaks.csv")
+</code></pre></div></div> <h2 id="linking-peaks-to-genes">Linking peaks to genes</h2> <p>Correlations between gene expression and accessible chromatin regions can be characterized using <code class="language-plaintext highlighter-rouge">LinkPeaks()</code> within a specified distance from the transciption start sites identified in pre-processing. Here, peaks associated with a set of marker genes associated with the major brainstem celltypes (oligodendrocytes, OPCs, glutamatergic neurons, astrocytes) found using the <a href='"https://cellxgene.cziscience.com/"'>CellxGene</a> Gene Expression tool were queried. This can also be run on the entire gene expression set if time permits (runtime on complete dataset with current resources: ~9 hrs).</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>all_markers &lt;- c("ST18", "CTNNA3", "RNF220", "PIP4K2A", "MBP", "TMEM144", "PDE4B", 
+             "PHLPP1", "EDIL3", "PRUNE2", "ELMO1", "TTLL7", "C10orf90", "ENPP2", 
+             "DOCK5", "MAP7", "MAN2A1", "QKI", "TMTC2", "SHTN1", "PLCL1", "PLEKHH1", 
+             "TF", "PXK", "SLC24A2", "PTPRZ1", "TNR", "LHFPL3", "PCDH15", "EPN2", 
+             "SOX6", "SCD5", "CA10", "LUZP2", "VCAN", "LRRC4C", "NXPH1", "NOVA1", "XYLT1", 
+             "MMP16", "KAT2B", "MEGF11", "SEMA5A", "SMOC1", "SLC35F1", "GALNT13", "AGAP1", 
+             "DGKG", "CDH20", "ARPP21", "DLGAP2", "RALYL", "R3HDM1", "KHDRBS2", "NELL2", "SH3GL2", 
+             "SATB2", "KHDRBS3", "SV2B", "HECW1", "GRIN2A", "KCNQ5", "RYR2", "CHRM3", "KCNIP4", "LDB2", 
+             "PTPRD", "PRKCB", "IQCJ-SCHIP1", "CHN1", "PHACTR1", "CNKSR2", "TAFA1", "FSTL4",
+             "SLC1A2", "NPAS3", "DTNA", "GPC5", "PITPNC1", "GPM6A", "BMPR1B", "RFX4", "MSI2",
+             "ADGRV1", "GLIS3", "RYR3", "SLC4A4", "TRPS1", "ATP13A4", "ATP1A2", "ADCY2", "NTM", "ZNRF3", 
+             "AQP4", "OBI1-AS1", "LRIG1", "PREX2")
+
+data &lt;- LinkPeaks(
+  object = data,
+  peak.assay = "ATAC",
+  expression.assay = "GENE_ACTIVITIES", # or "RNA"
+  peak.slot = "counts",
+  method = "pearson",
+  distance = 5e+05,
+  min.distance = NULL,
+  min.cells = 10,
+  genes.use = all_markers,
+  n_sample = 200,
+  pvalue_cutoff = 0.05,
+  score_cutoff = 0.05,
+)
+</code></pre></div></div> <p>Of the 97 queried marker genes, 67 were found to be proximally associated with peaks in the ATAC assay:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unique(Links(data[['ATAC']])$gene)
+# [1] "PRUNE2"  "GLIS3"   "SH3GL2"  "SLC24A2" "ZNRF3"   "FSTL4"   "MAN2A1"  "EDIL3"  
+# [9] "VCAN"    "ADCY2"   "GPM6A"   "TMEM144" "BMPR1B"  "SCD5"    "SLC4A4"  "LDB2"   
+# [17] "SLC35F1" "MAP7"    "QKI"     "EPN2"    "PITPNC1" "MSI2"    "SV2B"    "CHN1"   
+# [25] "R3HDM1"  "PLCL1"   "SATB2"   "AGAP1"   "PIP4K2A" "RNF220"  "TTLL7"   "HECW1"  
+# [33] "NXPH1"   "PTPRZ1"  "NELL2"   "TMTC2"   "RFX4"    "MEGF11"  "NOVA1"   "PLEKHH1"
+# [41] "SMOC1"   "SLC1A2"  "GRIN2A"  "XYLT1"   "PRKCB"   "SHTN1"   "DLGAP2"  "DOCK5"  
+# [49] "AQP4"    "DTNA"    "CDH20"   "PHLPP1"  "MBP"     "DGKG"    "ATP13A4" "PXK"    
+# [57] "LRIG1"   "ST18"    "PREX2"   "MMP16"   "KHDRBS3" "ENPP2"   "TRPS1"   "TF"     
+# [65] "KAT2B"   "ARPP21"  "ATP1A2"  "TNR"     "CNKSR2" 
+</code></pre></div></div> <p>Only two of these genes (SLC4A4, RFX4) were also identified as differentially expressed between oligodendrocyte+OPCs and astrocytes+ependymal cell clusters. The incongruence between highly expressed genes revealed in the RNA assay and those found to be associated with peaks in the ATAC assay is to an extent expected since cell-specific gene expression might be mediated by cellular context and enhancers well outside its proximity.</p> <p><code class="language-plaintext highlighter-rouge">CoveragePlot()</code> visualizes differential accessibility between celltypes and linked peaks associated with a gene or region of interest.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>idents.plot &lt;- c("31 OPC-Oligo", "23 P Glut", "30 Astro-Epen")
+
+CoveragePlot(
+  object = data,
+  assay = "ATAC",
+  expression.assay = "SCT",
+  region = "GRIN2A", # schizophrenia associated gene
+  extend.upstream = 1000,
+  extend.downstream = 1000,
+  idents = idents.plot,
+  annotation = TRUE
+)
+</code></pre></div></div> <h2 id="celltype-prediction-with-primate-data-microcebus-murinus-and-singler">Celltype prediction with primate data (<em>Microcebus murinus</em>) and SingleR</h2> <p>Cell annotation can be drastically impacted by number of factors, including but not limited to the quality of the reference itself. Using MapMyCells, I predicted celltypes using a bootstrap-like algorithm to compare expression profiles in primate tissue with a well annotated wild type/healthy mouse atlas. However, evolutionary distance between reference and query should also be considered. The emergence of the mouse lemur <em>Microcebus murinus</em> as a model primate system enables a lightweight test of the effects of using a reference dataset of a more closely related system on cell annotation and downstream DE and DA analyses.</p> <p>I downloaded RNA-seq data derived from brainstem and cortex tissue from the <a href='"https://tabula-microcebus.sf.czbiohub.org/whereisthedata"'>Tabula murnius</a> and converted the .h5ad to a Seurat object.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(anndataR)
+library(Seurat)
+library(SingleR)
+
+# reference data preparation
+reference &lt;- read_h5ad("microcebus_murinus_brainstem_and_cortex.h5ad")
+reference &lt;- reference$as_Seurat()
+</code></pre></div></div> <p>Similar to the annotation construction and chromosome renaming prior to generating the multiome Seurat object, here the reference data’s rownames needed to be converted from ENSEMBL gene identifiers to gene names to match the query data. This was accomplished by querying the ENSEMBL database with <code class="language-plaintext highlighter-rouge">biomaRt</code>.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>listMarts() 
+#               biomart                version
+#1 ENSEMBL_MART_ENSEMBL      Ensembl Genes 115
+#2   ENSEMBL_MART_MOUSE      Mouse strains 115
+#3     ENSEMBL_MART_SNP  Ensembl Variation 115
+#4 ENSEMBL_MART_FUNCGEN Ensembl Regulation 115
+
+ensembl &lt;- useMart("ENSEMBL_MART_ENSEMBL")
+listDatasets(ensembl)
+mouselemur_mart &lt;- useDataset(dataset = 'mmurinus_gene_ensembl', mart = ensembl, verbose = TRUE)
+attributes &lt;- c("ensembl_gene_id", "external_gene_name")
+gene_id_data &lt;- getBM(attributes = attributes, mart = mouselemur_mart)
+head(gene_id_data)
+
+id_to_symbol &lt;- setNames(gene_id_data$external_gene_name, gene_id_data$ensembl_gene_id)
+
+# get ref's counts matrix and assign new rownames
+rownames(reference) &lt;- id_to_symbol[rownames(reference)]
+reference &lt;- subset(reference, features = rownames(reference)[rownames(reference) != ""])
+</code></pre></div></div> <p>A Wilcoxon Rank Sum Test was conducted with <code class="language-plaintext highlighter-rouge">SingleR()</code>, first using log-normalized data. The result is a large dataframe, which was saved as an R object.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data &lt;- LoadSeuratRds("multiome_data_final.Rds")
+norm_counts &lt;- LayerData(data, assay = "RNA", layer = 'data') # LogNormalized
+raw_counts &lt;- LayerData(data, assay = "RNA", layer = 'counts')
+
+# run SingleR
+cellannotation_microcebus &lt;- SingleR(test = norm_counts,
+                  ref = reference[["RNA"]]$X, 
+                  labels = reference$cell_type,
+                  de.method = 'wilcox')
+saveRDS(cellannotation_microcebus,file = "singleR_microcebus_cellannotation.Rds")
+</code></pre></div></div> <p>Cell x gene expression patterns were visualized with functions from the <code class="language-plaintext highlighter-rouge">pheatmap</code> library.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plotScoreHeatmap(cellannotation_microcebus)
+plotDeltaDistribution(cellannotation_microcebus, ncol = 4, dots.on.top = FALSE)
+</code></pre></div></div> <p><img src="figs/04_SingleR_heatmap_microebus_annotations.png" alt="Venn diagram showing cell annotations and quality scores from SingleR run"></p> <p>These annotations were added to the original (and now very large) Seurat object’s metadata to faciliate comparison of celltype annotations.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rownames(cellannotation_microcebus)[1:5] # make sure you have cell IDs
+data &lt;- Seurat::AddMetaData(data, cellannotation_microcebus$pruned.labels, col.name = 'SingleR_annt_microcebus_ref')
+saveRDS(data,file = "multiome_data_final.Rds")
+</code></pre></div></div> <p>Expectedly, the majority of the cells are identified as oligodendroctyes, but 38% of the cells are assigned to either neurons (not subdivided as in MapMyCells) or astrocytes. The MapMyCells WMB annotations and the SingleR <em>Microcebus</em> annotations do not have perfectly congruent celltypes, but between both strategies there is similarity in number of assignments to either oligodendrocytes or OPCs (MMC-WMB = 9098, SingleR-Mm = 10258), as well as the labeling of either astrocytes or ependymal cells (MMC-WMB = 1407, SingleR-Mm = 1588). Furthermore, 303 cells were also pruned during the SingleR prediction due to low quality annotation.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>microcebus_annotations &lt;- readRDS("singleR_microcebus_cellannotation.Rds")
+data &lt;- readRDS("multiome_data_final.Rds")
+data &lt;- SetIdent(data, value = 'SingleR_annt_microcebus_ref')
+DimPlot(data, reduction = "umap", repel = T, label = T) #+ NoLegend()
+# Error in data.frame(..., check.names = FALSE) : 
+#   arguments imply differing number of rows: 16227, 15924
+# In addition: Warning message:
+#   Removing 303 cells missing data for vars requested 
+# referenced here: https://github.com/satijalab/seurat/issues/10180
+
+data.frame(Cell_counts=head(sort(table(microcebus_annotatoins$labels),decreasing=T),34))
+# Cell_counts.Var1 Cell_counts.Freq
+# 1                 oligodendrocyte             8202
+# 2                          neuron             4533
+# 3                       astrocyte             1578
+# 4  oligodendrocyte precursor cell              896
+# 5                GABAergic neuron              351
+# 6                      macrophage              249
+# 7            glutamatergic neuron              183
+# 8                    stromal cell               91
+# 9      capillary endothelial cell               30
+# 10       myelinating Schwann cell               21
+# 11   non-myelinating Schwann cell               18
+# 12                         B cell               14
+# 13                     lymphocyte               13
+# 14                       pericyte               13
+# 15                 ependymal cell               10
+# 16 choroid plexus epithelial cell                9
+# 17            leptomeningeal cell                8
+# 18                        unknown                8
+</code></pre></div></div> <p>Visualization of shared features between the <em>Microcebus murinus</em> data and <em>Callithrix jacchus</em> genome reveals an 840 gene discrepancy between the references:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(VennDiagram)
+venn.diagram(
+  disable.logging = TRUE,
+  margin =.1,
+  x = list(microcebus_genes, callithtrix_genes, rna_genes, gene_activities),
+  category.names = c("Microcebus" , "Callithrix", "RNA Assay", "Gene Activities Assay"),
+  filename = 'microcebus_vs_callithrix_venn_diagramm_multiassay.png',
+  output=TRUE
+)
+</code></pre></div></div> <p>While irrelevant for this experiment due to their absence in the query data, this result highlights the nontriviality of reference choice for both cluster identification and downstream analyses. Addiionally, the near 9000 genes shared by the RNA expression assay and the <em>Callithrix</em> reference genome but not inferred from <code class="language-plaintext highlighter-rouge">GeneActivity()</code> identificaiton further highlights the signal discordance between direct and indirect gene expression quantification.</p> <h2 id="references">References</h2> <h3 id="data">Data</h3> <p>Dataset: Fenna M. Krienen, Kirsten M. Levandowski, Heather Zaniewski, Ricardo C.H. del Rosario, Margaret E. Schroeder, Melissa Goldman, Alyssa Lutservitz, Qiangge Zhang, Katelyn X. Li, Victoria F. Beja-Glasser, Jitendra Sharma, Tay Won Shin, Abigail Mauermann, Alec Wysoker, James Nemesh, Seva Kashin, Josselyn Vergara, Gabriele Chelini, Jordane Dimidschstein, Sabina Berretta, Ed Boyden, Steven A. McCarroll, Guoping Feng (2023) A Marmoset Brain Cell Census Reveals Persistent Influence of Developmental Origin on Neurons. Available from https://assets.nemoarchive.org/dat-1je0mn3</p> <p>UCSC Genome Browser assembly ID: “calJac4”. Perez et al. The UCSC Genome Browser database: 2025 update. Nucleic Acids Research 2025 PMID: 39460617, DOI: 10.1093/nar/gkae974</p> <h3 id="relevant-literature">Relevant Literature</h3> <p>Ezran, Camille, et al. “Mouse lemur cell atlas informs primate genes, physiology and disease.” Nature 644.8075 (2025): 185-196.</p> <p>Gontarz, Paul, et al. “Comparison of differential accessibility analysis strategies for ATAC-seq data.” Scientific reports 10.1 (2020): 10150.</p> <p>Krienen, Fenna M., et al. “A marmoset brain cell census reveals regional specialization of cellular identities.” Science advances 9.41 (2023): eadk3986.</p> <p>Teo, Alan Yue Yang, et al. “Best practices for differential accessibility analysis in single-cell epigenomics.” Nature communications 15.1 (2024): 8805.</p> <p>Yan, Feng, et al. “From reads to insight: a hitchhiker’s guide to ATAC-seq data analysis.” Genome biology 21.1 (2020): 22.</p> <p>Yao, Zizhen, et al. “A high-resolution transcriptomic and spatial atlas of cell types in the whole mouse brain.” Nature 624.7991 (2023): 317-332.</p> <p>To give your project a background in the portfolio page, just add the img tag to the front matter like so:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
 layout: page
 title: project
 description: a project with a background image
