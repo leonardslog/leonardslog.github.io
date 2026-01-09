@@ -14,6 +14,8 @@ Beyond the software documentation, I also found the following resources incredib
 <https://ngs101.com/tutorials/> \
 <https://github.com/mousepixels/sanbomics_scripts>
 
+## Contents
+
 *   [System setup](#system-setup)
 *   [Preprocessing](#preprocessing)
 *   [Normalization](#normalization)
