@@ -14,6 +14,14 @@ Beyond the software documentation, I also found the following resources incredib
 <https://ngs101.com/tutorials/> \
 <https://github.com/mousepixels/sanbomics_scripts>
 
+*   [System setup](#system-setup)
+*   [Preprocessing](#preprocessing)
+*   [Normalization](#normalization)
+*   [Celltype annotation with MapMyCells](#cell-annotation)
+*   [Differential expression analysis](#differential-expression-analysis)
+*   [Differential accessibility analysis](#differential-accessibility-analysis)
+*   [Addendum: Celltype prediction with SingleR](#addendum-celltype-prediction-with-primate-data-and-singler)
+
 ## System setup
 
 _**Note**_: At the time of this exercise the developer version of `Seurat` was required to fix a [bug](https://github.com/satijalab/seurat/issues/10180) encountered in downstream plotting.
@@ -77,19 +85,19 @@ alias_map_df <- read.csv("Callithrix_jacchus_cj1700_1/GCF_009663435.1.chromAlias
 head(alias_map_df)
 colnames(alias_map_df)[1] <- "refseq"
 head(alias_map_df)
-       refseq assembly    genbank ncbi ucsc
-1 NC_025586.1       MT              MT chrM
-2 NC_048383.1     chr1 CM018917.1    1 chr1
-3 NC_048384.1     chr2 CM018918.1    2 chr2
-4 NC_048385.1     chr3 CM018919.1    3 chr3
-5 NC_048386.1     chr4 CM018920.1    4 chr4
-6 NC_048387.1     chr5 CM018921.1    5 chr5
+#       refseq assembly    genbank ncbi ucsc
+#1 NC_025586.1       MT              MT chrM
+#2 NC_048383.1     chr1 CM018917.1    1 chr1
+#3 NC_048384.1     chr2 CM018918.1    2 chr2
+#4 NC_048385.1     chr3 CM018919.1    3 chr3
+#5 NC_048386.1     chr4 CM018920.1    4 chr4
+#6 NC_048387.1     chr5 CM018921.1    5 chr5
 
 alias_map_vector <- setNames(alias_map_df$ucsc, alias_map_df$refseq)
 alias_map_vector <- alias_map_vector[!is.na(alias_map_vector) & alias_map_vector != ""] # remove NAs and blanks in case present
 head(alias_map_vector)
-NC_025586.1 NC_048383.1 NC_048384.1 NC_048385.1 NC_048386.1 NC_048387.1 
-     "chrM"      "chr1"      "chr2"      "chr3"      "chr4"      "chr5" 
+#NC_025586.1 NC_048383.1 NC_048384.1 NC_048385.1 NC_048386.1 NC_048387.1 
+#     "chrM"      "chr1"      "chr2"      "chr3"      "chr4"      "chr5" 
 ```
 
 Next, a vector of the current chromosomes/scaffolds in the genome that need to be changed is constructed, mapped to the names to names to UCSC names, and assigned to the genome/annotation object.
@@ -423,7 +431,7 @@ CoveragePlot(
 )
 ```
 
-## Celltype prediction with primate data (_Microcebus murinus_) and SingleR
+# Addendum: Celltype prediction with primate data and SingleR
 
 Cell annotation can be drastically impacted by number of factors, including but not limited to the quality of the reference itself. Using MapMyCells, I predicted celltypes using a bootstrap-like algorithm to compare expression profiles in primate tissue with a well annotated wild type/healthy mouse atlas. However, evolutionary distance between reference and query should also be considered. The emergence of the mouse lemur _Microcebus murinus_ as a model primate system enables a lightweight test of the effects of using a reference dataset of a more closely related system on cell annotation and downstream DE and DA analyses. 
 
