@@ -8,9 +8,9 @@ category: workbench
 related_publications: true
 ---
 
-To familiarize myself with RNA and ATAC-seq analysis workflows, I opted to work with publicly available raw data from the Allen Institute's [Brain Knowledge Platform](https://brain-map.org/bkp). These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset *Callithrix jacchus*.
+The following workflow is an analysis of publicly available raw data from the Allen Institute's [Brain Knowledge Platform](https://brain-map.org/bkp). These analyses were carried out on a laptop with 8 cores and 64GB of memory, so to address computational resource and storage limitations, I analyzed 10X Multiomic data generated from brainstem tissue in the common marmoset *Callithrix jacchus*.
 
-Beyond the software documentation, I also found the following resources incredibly helpful: \
+In addition to the [Seurat](https://satijalab.org/seurat/articles/get_started_v5_new) and [Signac](https://stuartlab.org/signac/articles/overview) documentation, I also found the following resources incredibly helpful: \
 <https://ngs101.com/tutorials/> \
 <https://github.com/mousepixels/sanbomics_scripts>
 
@@ -26,13 +26,13 @@ Beyond the software documentation, I also found the following resources incredib
 
 ## System setup
 
-_**Note**_: At the time of this exercise the developer version of `Seurat` was required to fix a [bug](https://github.com/satijalab/seurat/issues/10180) encountered in downstream plotting.
+**Note**: At the time of this exercise the developer version of Seurat was required to fix a [bug](https://github.com/satijalab/seurat/issues/10180) encountered in downstream plotting.
 
 ~~~
 # analysis
 library(Seurat) # v5.3.1.9001
 library(Signac)
-library(presto) # for much faster Wilcoxon rank sum test
+library(presto) # much faster Wilcoxon rank sum test
 library(SingleR)
 
 # object manipulation
@@ -79,7 +79,7 @@ annotations$gene_name <- annotations$gene # gene_name col required for CreateChr
 colnames(mcols(annotations))
 ```
 
-Seurat's CreateChromatinAssay() also requires UCSC format for the chromosome labels of the reference (currently RefSeq), so here they're changed by vector mapping with the Alias.txt downloaded from the UCSC Genome Browser.
+Seurat's `CreateChromatinAssay()` also requires UCSC format for the chromosome labels of the reference (currently RefSeq), so here they're changed by vector mapping with the Alias.txt downloaded from the UCSC Genome Browser.
 ```
 alias_map_df <- read.csv("Callithrix_jacchus_cj1700_1/GCF_009663435.1.chromAlias.txt", 
                          header = TRUE, sep = "\t"
@@ -109,7 +109,7 @@ new_seqlevels <- alias_map_vector[as.character(current_seqlevels)]
 seqlevels(annotations) <- new_seqlevels
 ```
 
-The presence of NA's in the 'gene_biotype' column of the annotation object will call an error, so rows with them were removed.
+The presence of NA's in the 'gene_biotype' column of the annotation object will call an error, so rows with them are removed.
 ```
 annotations <- annotations[!is.na(annotations$gene_biotype)] # NAs will introduce error during TSSEnrichment
 seqlevelsStyle(annotations) # confirmed that new style is UCSC
@@ -128,7 +128,7 @@ atac <- CreateSeuratObject(counts = counts$Peaks, meta.data = meta, assay = "ATA
 atac <- subset(atac, subset = is_cell == 1)
 ```
 
-Creation of the chromatin ASSAY with the ATAC feature matrix requires both the fragments and the annotation object. Raw objects are no longer needed and can be removed to free up memory.
+Chromatin assay object creation with the ATAC feature matrix requires both the fragments and the annotation object. Raw objects are no longer needed and can be removed to free up memory.
 ```
 multiome_data[["ATAC"]] <- CreateChromatinAssay(
   counts = LayerData(atac), 
@@ -157,7 +157,7 @@ VlnPlot(
 )
 ```
 
-I filtered cells with cuttoffs for counts, TSS enrichment, and nucleosome signal based on the bottom and top quantiles shown in the density scatterplot.
+Here I filter cells with cuttoffs for counts, TSS enrichment, and nucleosome signal based on the bottom and top quantiles shown in the density scatterplot.
 
 ```
 multiome_data_filtered <- subset(
@@ -173,7 +173,7 @@ gc()
 
 ## Normalization
 
-**_Note_**: MapMyCells does not require normalization for cell annotation, and developers urge caution in interpreting results from log-normalized data, so if performing this step first, it's important to reference the correct layer within the Seurat object when formatting its input.
+**Note**: MapMyCells does not require normalization for cell annotation, and developers urge caution in interpreting results from log-normalized data, so if performing this step first, it's important to reference the correct layer within the Seurat object when formatting its input.
 
 ```
 DefaultAssay(multiome_data_filtered) <- "RNA"
@@ -221,6 +221,7 @@ colnames(mapmycells_WMB)
 
 rownames(mapmycells_WMB) <- mapmycells_WMB$cell_id
 ```
+
 From the distribution of celltype counts (N=16227), over 60% of the cells are identified as oligodendrocytes or oligodendrocyte precursor cells ("31 OPC-Oligo"), with the 2nd and 3rd largest clusters consisting of glutamatergic neurons ("23 P Glut") and astrocytes or ependymal cells ("30 Astro-Epen"), respectively.
 ```
 data.frame(Cell_counts=head(sort(table(mapmycells_WMB$class_name),decreasing=T),34))
@@ -369,7 +370,7 @@ write.csv(pglut_astro.da.peaks, file = "pglut_astro_da_peaks.csv")
 
 ## Linking peaks to genes
 
-Correlations between gene expression and accessible chromatin regions can be characterized using `LinkPeaks()` within a specified distance from the transciption start sites identified in pre-processing. Here, peaks associated with a set of marker genes associated with the major brainstem celltypes (oligodendrocytes, OPCs, glutamatergic neurons, astrocytes) found using the [CellxGene]("https://cellxgene.cziscience.com/") Gene Expression tool were queried. This can also be run on the entire gene expression set if time permits (runtime on complete dataset with current resources: ~9 hrs).
+Correlations between gene expression and accessible chromatin regions can be characterized using `LinkPeaks()` within a specified distance from the transciption start sites identified in pre-processing. Here, peaks associated with a set of marker genes associated with the major brainstem celltypes (oligodendrocytes, OPCs, glutamatergic neurons, astrocytes) found with queries from the [CellxGene]("https://cellxgene.cziscience.com/") Gene Expression tool. This can also be run on the entire gene expression set if time permits (runtime on complete dataset with current resources: ~9 hrs).
 
 ```
 all_markers <- c("ST18", "CTNNA3", "RNF220", "PIP4K2A", "MBP", "TMEM144", "PDE4B", 
@@ -414,7 +415,7 @@ unique(Links(data[['ATAC']])$gene)
 # [65] "KAT2B"   "ARPP21"  "ATP1A2"  "TNR"     "CNKSR2" 
 ```
 
-Only two of these genes (SLC4A4, RFX4) were also identified as differentially expressed between oligodendrocyte+OPCs and astrocytes+ependymal cell clusters. The incongruence between highly expressed genes revealed in the RNA assay and those found to be associated with peaks in the ATAC assay is to an extent expected since cell-specific gene expression might be mediated by cellular context and enhancers well outside its proximity.
+Only two of these genes (SLC4A4, RFX4) were also identified as differentially expressed between oligodendrocyte+OPCs and astrocytes+ependymal cell clusters. The incongruence between highly expressed genes revealed in the RNA assay and those found to be associated with peaks in the ATAC assay is to an extent expected since cell-specific gene expression might be mediated by cellular context and enhancers well outside the specified search proximity.
 
 `CoveragePlot()` visualizes differential accessibility between celltypes and linked peaks associated with a gene or region of interest.
 
